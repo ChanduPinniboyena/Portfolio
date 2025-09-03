@@ -5,15 +5,18 @@
   box-sizing: border-box;
 }
 
+/* CSS Variables */
 :root {
   --primary-color: #2563eb;
   --secondary-color: #1e40af;
-  --text-color: #1f2937;
+  --text-color: #111827;
   --light-text: #6b7280;
+  --muted-text: #4b5563;
   --background: #ffffff;
-  --section-bg: #f3f4f6;
+  --section-bg: #f8fafc;
   --card-bg: #ffffff;
   --border-color: #e5e7eb;
+  --focus-ring: rgba(37, 99, 235, 0.35);
 }
 
 body {
@@ -21,6 +24,8 @@ body {
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
@@ -37,7 +42,7 @@ body {
   right: 0;
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(5px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
   z-index: 1000;
 }
 
@@ -64,17 +69,34 @@ body {
   text-decoration: none;
   color: var(--text-color);
   font-weight: 500;
-  transition: color 0.3s ease;
+  position: relative;
+  transition: color 0.25s ease;
 }
 
 .nav-links a:hover {
   color: var(--primary-color);
 }
 
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: width 0.25s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
 /* Hero Section */
 .hero {
   padding: 120px 0 80px;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  background: radial-gradient(1200px 600px at 50% -200px, #eaf2ff, transparent),
+              radial-gradient(800px 400px at 100% 0, #f0f9ff, transparent);
 }
 
 .hero-content {
@@ -100,7 +122,7 @@ body {
 
 .description {
   font-size: 1.1rem;
-  color: var(--light-text);
+  color: var(--muted-text);
   margin-bottom: 2rem;
 }
 
@@ -113,7 +135,7 @@ body {
   border-radius: 0.5rem;
   font-weight: 500;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, background-color 0.25s ease, color 0.25s ease, box-shadow 0.2s ease;
 }
 
 .primary-btn {
@@ -124,6 +146,7 @@ body {
 .primary-btn:hover {
   background-color: var(--secondary-color);
   transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
 }
 
 .secondary-btn {
@@ -136,6 +159,7 @@ body {
   background-color: var(--primary-color);
   color: white;
   transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.15);
 }
 
 .cta-buttons {
@@ -160,6 +184,17 @@ body {
   text-align: center;
 }
 
+/* Headings accent underline */
+.section h2::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 0.75rem auto 0;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border-radius: 999px;
+}
+
 /* Projects */
 .projects-grid {
   display: grid;
@@ -168,12 +203,30 @@ body {
   padding: 1rem;
 }
 
+/* About text formatting */
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-content p {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  color: var(--muted-text);
+}
+
+.about-content p:first-child {
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
 .card {
   background-color: var(--card-bg);
   border-radius: 1.5rem;
   overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   border: 1px solid var(--border-color);
   height: 100%;
   display: flex;
@@ -182,7 +235,7 @@ body {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
   border-color: var(--primary-color);
 }
 
@@ -196,15 +249,25 @@ body {
 .card h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: var(--primary-color);
+  color: var(--text-color);
   font-weight: 700;
 }
 
 .card p {
-  color: var(--light-text);
+  color: var(--muted-text);
   margin-bottom: 1.5rem;
   line-height: 1.6;
   flex-grow: 1;
+}
+
+/* Humanized list styling inside cards */
+.card ul {
+  margin: 0 0 1.25rem 1.25rem;
+  color: var(--muted-text);
+}
+
+.card li {
+  margin-bottom: 0.5rem;
 }
 
 .tech-stack {
@@ -215,18 +278,32 @@ body {
 }
 
 .tech-stack span {
-  background-color: rgba(37, 99, 235, 0.1);
+  background-color: var(--section-bg);
   padding: 0.5rem 1rem;
   border-radius: 2rem;
   font-size: 0.875rem;
-  color: var(--primary-color);
+  color: var(--muted-text);
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
 }
 
 .tech-stack span:hover {
   background-color: var(--primary-color);
   color: white;
+  transform: translateY(-1px);
+}
+
+/* Harmonize Projects section visuals */
+#projects {
+  background: linear-gradient(180deg, #f8fbff 0%, #f6f8fc 100%);
+}
+
+#projects .card {
+  border-color: #e6ecf5;
+}
+
+#projects .card:hover {
+  border-color: var(--primary-color);
 }
 
 .card-links {
@@ -282,12 +359,13 @@ body {
   border-radius: 2rem;
   font-size: 0.875rem;
   color: var(--text-color);
-  transition: all 0.3s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
 }
 
 .skill-tag:hover {
   background-color: var(--primary-color);
   color: white;
+  transform: translateY(-1px);
 }
 
 /* Education */
@@ -295,7 +373,7 @@ body {
   background-color: var(--card-bg);
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .education-card h3 {
@@ -324,7 +402,7 @@ body {
   background-color: var(--card-bg);
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .form-group {
@@ -338,13 +416,14 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.25s ease, box-shadow 0.2s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px var(--focus-ring);
 }
 
 .contact-info {
@@ -385,11 +464,12 @@ footer {
 .social-links a {
   color: white;
   font-size: 1.5rem;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease, transform 0.2s ease;
 }
 
 .social-links a:hover {
   color: var(--primary-color);
+  transform: translateY(-2px);
 }
 
 /* Responsive Design */
@@ -414,5 +494,21 @@ footer {
   
   .nav-links {
     display: none;
+  }
+}
+
+/* Accessibility & polish */
+::selection {
+  background: rgba(37, 99, 235, 0.2);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
   }
 }
